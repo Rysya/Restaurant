@@ -4,7 +4,7 @@ protocol OrderViewControllerDelegate: AnyObject {
     func reloadData()
 }
 
-class OrderViewController: UIViewController {
+final class OrderViewController: UIViewController {
     
     private var mainView: OrderView {
         view as! OrderView
@@ -21,7 +21,6 @@ class OrderViewController: UIViewController {
     override func loadView() {
         view = OrderView(delegate: self)
         delegate = mainView
-        //        mainView.order = order
     }
     
     override func viewDidLoad() {

@@ -1,6 +1,6 @@
 import UIKit
 
-class AddPositionView: UIView {
+final class AddPositionView: UIView {
 
     let productTF: UITextField = {
         let tf = UITextField()
@@ -22,10 +22,11 @@ class AddPositionView: UIView {
     }()
     
     let readyButton: UIButton = {
-        let readyButton = UIButton(type: .system)
+        let readyButton = UIButton(type: .custom)
         readyButton.setTitle("Готово", for: .normal)
         readyButton.setTitleColor(.white, for: .normal)
         readyButton.backgroundColor = .systemGreen
+        readyButton.layer.cornerRadius = 20
         return readyButton
     }()
     
@@ -34,14 +35,14 @@ class AddPositionView: UIView {
         return picker
     }()
     
-    let countStack: UIStackView = {
+    private let countStack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 20
         return stackView
     }()
     
-    let stack: UIStackView = {
+    private let stack: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -59,7 +60,7 @@ class AddPositionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI() {
+    private func setupUI() {
         productTF.inputView = picker
         
         countStack.addArrangedSubview(stepper)
@@ -74,8 +75,11 @@ class AddPositionView: UIView {
     
     // MARK: - Navigation
     
-    func setConstraints() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
+            readyButton.widthAnchor.constraint(equalToConstant: 200),
+            readyButton.heightAnchor.constraint(equalToConstant: 40),
+            
             stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stack.centerYAnchor.constraint(equalTo: centerYAnchor),
             stack.centerXAnchor.constraint(equalTo: centerXAnchor)

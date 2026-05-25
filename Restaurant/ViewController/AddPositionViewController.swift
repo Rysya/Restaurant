@@ -4,17 +4,17 @@ protocol AddPosiotnDelegate: AnyObject {
     func addPosition(_ pos: OrderPosition)
 }
 
-class AddPositionViewController: UIViewController {
+final class AddPositionViewController: UIViewController {
     weak var delegate: AddPosiotnDelegate?
     let mainView = AddPositionView()
     
-    var selectedProduct = ProductsSource.products[0] {
+    private var selectedProduct = ProductsSource.products[0] {
         didSet {
             mainView.productTF.text = selectedProduct.title
         }
     }
     
-    var count = 1 {
+    private var count = 1 {
         didSet {
             mainView.countLablel.text = "\(count) шт."
         }
@@ -33,7 +33,7 @@ class AddPositionViewController: UIViewController {
         addAction()
     }
     
-    func addAction() {
+    private func addAction() {
         let changeCountAction = UIAction { [unowned self] _ in
             self.count = Int(self.mainView.stepper.value)
         }
@@ -80,5 +80,4 @@ extension AddPositionViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         mainView.productTF.text = ProductsSource.products[0].title
     }
-    
 }

@@ -8,15 +8,10 @@ protocol OrderViewDelegate: AnyObject {
 }
 
 
-class OrderView: UIView {
+final class OrderView: UIView {
     
     let addButton = UIButton()
-    
-//    var order: [OrderPosition] = [] {
-//           didSet {
-//               tableView.reloadData()
-//           }
-//    }
+
     private weak var delegate: OrderViewDelegate!
     
     private lazy var tableView: UITableView = {
@@ -39,21 +34,21 @@ class OrderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setButton() {
+    private func setButton() {
         addButton.setTitle("Добавить товар", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
         addButton.backgroundColor = .systemBlue
         addButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func setTableView() {
+    private func setTableView() {
         addSubviews([tableView])
         tableView.tableHeaderView = addButton
     }
 
     // MARK: - Navigation
     
-    func setConstraints() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -60),
@@ -83,7 +78,7 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
         let action = UIContextualAction(style: .normal, title: "Изменить") { _, _, _ in
             self.delegate.showEditCountAlert(with: indexPath.row)
         }
-        action.backgroundColor = .green
+        action.backgroundColor = .systemGreen
         let config = UISwipeActionsConfiguration(actions: [action])
         return config
     }

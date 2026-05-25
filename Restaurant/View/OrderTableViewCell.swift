@@ -1,6 +1,6 @@
 import UIKit
 
-class OrderTableViewCell: UITableViewCell {
+final class OrderTableViewCell: UITableViewCell {
     static let id = "OrderTableViewCell"
 
     let titleLabel: UILabel = {
@@ -18,7 +18,7 @@ class OrderTableViewCell: UITableViewCell {
         return label
     }()
     
-    var stepper: UIStepper = {
+    private var stepper: UIStepper = {
         let stepper = UIStepper()
         stepper.minimumValue = 1
         stepper.maximumValue = 20
@@ -26,15 +26,13 @@ class OrderTableViewCell: UITableViewCell {
         return stepper
     }()
     
-    let stackLabel: UIStackView = {
+    private let stackLabel: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         return stack
     }()
-    
-    var onCountChanged: ((Int) -> Void)?
-    
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         stackLabel.addArrangedSubview(titleLabel)
@@ -53,7 +51,7 @@ class OrderTableViewCell: UITableViewCell {
 
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             stackLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stackLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),

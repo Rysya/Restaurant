@@ -34,6 +34,10 @@ final class OrderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func reloadData() {
+        self.tableView.reloadData()
+    }
+    
     private func setButton() {
         addButton.setTitle("Добавить товар", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
@@ -89,11 +93,5 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
         }
         let config = UISwipeActionsConfiguration(actions: [deleteAction])
         return config
-    }
-}
-
-extension OrderView: OrderViewControllerDelegate {
-    func reloadData() {
-        self.tableView.reloadData()
     }
 }

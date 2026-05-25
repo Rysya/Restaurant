@@ -1,9 +1,5 @@
 import UIKit
 
-protocol OrderViewControllerDelegate: AnyObject {
-    func reloadData()
-}
-
 final class OrderViewController: UIViewController {
     
     private var mainView: OrderView {
@@ -12,15 +8,12 @@ final class OrderViewController: UIViewController {
     
     private(set) var order = [OrderPosition]() {
         didSet {
-            delegate?.reloadData()
+            mainView.reloadData()
         }
     }
     
-    private weak var delegate: OrderViewControllerDelegate?
-    
     override func loadView() {
         view = OrderView(delegate: self)
-        delegate = mainView
     }
     
     override func viewDidLoad() {
@@ -83,8 +76,9 @@ extension OrderViewController: OrderViewDelegate {
         alert.addAction(UIAlertAction(
             title: "OK",
             style: .default
-        ) { _ in
-            self.order[index].count = Int(stepper.value)
+        ) { [weak self] _ in
+            self?.order[index].count = Int(stepper.value)
+            self?.mainView.reloadData()
         })
         
         alert.addAction(
@@ -95,6 +89,6 @@ extension OrderViewController: OrderViewDelegate {
     
     func deleteOrder(with index: Int) {
         self.order.remove(at: index)
-        delegate?.reloadData()
+        mainView.reloadData()
     }
 }

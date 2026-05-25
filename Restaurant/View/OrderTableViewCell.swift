@@ -10,12 +10,20 @@ class OrderTableViewCell: UITableViewCell {
         return label
     }()
     
-    let countLabel: UILabel = {
+    var countLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.numberOfLines = 0
         label.textAlignment = .right
         return label
+    }()
+    
+    var stepper: UIStepper = {
+        let stepper = UIStepper()
+        stepper.minimumValue = 1
+        stepper.maximumValue = 20
+        stepper.isHidden = true
+        return stepper
     }()
     
     let stackLabel: UIStackView = {
@@ -25,10 +33,13 @@ class OrderTableViewCell: UITableViewCell {
         return stack
     }()
     
+    var onCountChanged: ((Int) -> Void)?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         stackLabel.addArrangedSubview(titleLabel)
         stackLabel.addArrangedSubview(countLabel)
+        stackLabel.addArrangedSubview(stepper)
         self.addSubviews([stackLabel])
         setConstraints()
     }

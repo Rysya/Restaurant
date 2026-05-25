@@ -1,14 +1,23 @@
 import UIKit
 
+protocol OrderViewDelegate: AnyObject {
+    var order: [OrderPosition] { get }
+    
+    func showEditCountAlert(with index: Int)
+    func deleteOrder(with index: Int)
+}
+
+
 class OrderView: UIView {
     
     let addButton = UIButton()
     
-    var order: [OrderPosition] = [] {
-           didSet {
-               tableView.reloadData()
-           }
-    }
+//    var order: [OrderPosition] = [] {
+//           didSet {
+//               tableView.reloadData()
+//           }
+//    }
+    private weak var delegate: OrderViewDelegate!
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -17,9 +26,9 @@ class OrderView: UIView {
         tableView.register(OrderTableViewCell.self, forCellReuseIdentifier: OrderTableViewCell.id)
         return tableView
     }()
-
     
-    init () {
+    init(delegate: OrderViewDelegate) {
+        self.delegate = delegate
         super.init(frame: CGRect())
         setTableView()
         setButton()
@@ -59,12 +68,12 @@ class OrderView: UIView {
 
 extension OrderView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         order.count
+        delegate.order.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: OrderTableViewCell.id, for: indexPath) as! OrderTableViewCell
-        let position = order[indexPath.row]
+        let position = delegate.order[indexPath.row]
         cell.titleLabel.text = position.product.title
         cell.countLabel.text = "\(position.count)"
         return cell
@@ -72,20 +81,7 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Изменить") { _, _, _ in
-            let alert = UIAlertController(title: "Изменить гостя", message: nil, preferredStyle: .alert)
-            
-            alert.addTextField { (textField) in
-                textField.text = self.order[indexPath.row].product.title
-            }
-           
-//            let action = UIAlertAction(title: "OK", style: .default) { _ in
-//                self.order[indexPath.row].product. = alert.textFields?[0].text ?? ""
-//                self.tableView.reloadData()
-//            }
-            let cancel = UIAlertAction(title: "Отмена", style: .destructive)
-//            alert.addAction(action)
-            alert.addAction(cancel)
-//            self.present(alert, animated: true)
+            self.delegate.showEditCountAlert(with: indexPath.row)
         }
         action.backgroundColor = .green
         let config = UISwipeActionsConfiguration(actions: [action])
@@ -94,10 +90,15 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { _, _, _ in
-            self.order.remove(at: indexPath.row)
-            self.tableView.reloadData()
+            self.delegate.deleteOrder(with: indexPath.row)
         }
         let config = UISwipeActionsConfiguration(actions: [deleteAction])
         return config
+    }
+}
+
+extension OrderView: OrderViewControllerDelegate {
+    func reloadData() {
+        self.tableView.reloadData()
     }
 }

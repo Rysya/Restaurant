@@ -41,7 +41,7 @@ struct ProductsSource {
                 price: 160,
                 oldPrice: 270,
                 description: "Готовится в турке на песчаной бане",
-                category: .hot
+                category: .drink
             ),
             
             Product(
@@ -49,7 +49,7 @@ struct ProductsSource {
                 price: 160,
                 oldPrice: 270,
                 description: "Готовится в турке на песчаной бане",
-                category: .hot
+                category: .drink
             ),
             
             Product(
@@ -57,7 +57,7 @@ struct ProductsSource {
                 price: 160,
                 oldPrice: 270,
                 description: "Готовится в турке на песчаной бане",
-                category: .hot
+                category: .drink
             ),
             
             Product(
@@ -65,7 +65,7 @@ struct ProductsSource {
                 price: 160,
                 oldPrice: 270,
                 description: "Готовится в турке на песчаной бане",
-                category: .hot
+                category: .drink
             ),
             
             Product(
@@ -73,7 +73,7 @@ struct ProductsSource {
                 price: 320,
                 oldPrice: nil,
                 description: "Внезапно, да?",
-                category: .hot
+                category: .salat
             ),
             
             Product(

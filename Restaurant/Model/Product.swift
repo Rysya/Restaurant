@@ -9,7 +9,7 @@ struct Product {
     var imageName: String?
 }
 
-enum ProductCategory: String {
+enum ProductCategory: String, CaseIterable {
     case salat = "Салаты"
     case hot = "Горячие"
     case drink = "Напитки"

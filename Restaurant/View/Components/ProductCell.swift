@@ -5,17 +5,17 @@ class ProductCell: UICollectionViewCell {
     static let reuseID = "ProductCell"
     let productImageView = UIImageView(image: UIImage(systemName: "photo"))
     let titleLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "Название товара"
-        lbl.font = .systemFont(ofSize: 14)
-        return lbl
+        let label = UILabel()
+        label.text = "Название товара"
+        label.font = .systemFont(ofSize: 14)
+        return label
     }()
     
     let priceLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "380 ₽"
-        lbl.font = .systemFont(ofSize: 16, weight: .bold)
-        return lbl
+        let label = UILabel()
+        label.text = "380 ₽"
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
     }()
     
     override init(frame: CGRect) {

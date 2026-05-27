@@ -53,7 +53,6 @@ extension MenuController: UICollectionViewDelegate, UICollectionViewDataSource {
                 
             default: return UICollectionViewCell()
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

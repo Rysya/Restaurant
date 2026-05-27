@@ -26,14 +26,11 @@ class CompositionalLayoutService {
                     
                     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.5))
         //            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 2)
-                    
                     //еще так можно:
                     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item, item])
                     let section = NSCollectionLayoutSection(group: group)
                     section.interGroupSpacing = 8
-                    
                     return section
-                    
                 default: return nil
             }
         }

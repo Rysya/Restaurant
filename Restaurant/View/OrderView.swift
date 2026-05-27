@@ -1,7 +1,7 @@
 import UIKit
 
 protocol OrderViewDelegate: AnyObject {
-    var order: [OrderPosition] { get }
+    var orders: [OrderPosition] { get }
     
     func showEditCountAlert(with index: Int)
     func deleteOrder(with index: Int)
@@ -80,6 +80,31 @@ final class OrderView: UIView {
         tableView.tableFooterView = stackTotal
         tableView.tableFooterView?.backgroundColor = .brown
     }
+    
+    private var visibleCategories: [ProductCategory] {
+        ProductCategory.allCases.filter { category in
+            delegate.orders.contains {
+                $0.product.category == category
+            }
+        }
+    }
+    
+    private func positions(for section: Int) -> [OrderPosition] {
+        let category = visibleCategories[section]
+        return delegate.orders.filter {
+            $0.product.category == category
+        }
+    }
+    
+    private func totalSum(for section: Int) -> Int {
+        positions(for: section)
+            .reduce(0) { $0 + $1.cost }
+    }
+
+    private func totalCount(for section: Int) -> Int {
+        positions(for: section)
+            .reduce(0) { $0 + $1.count }
+    }
 
     // MARK: - Navigation
     
@@ -106,16 +131,49 @@ final class OrderView: UIView {
 }
 
 extension OrderView: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        visibleCategories.count
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        visibleCategories[section].rawValue
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        let label = UILabel()
+        let count = totalCount(for: section)
+        let sum = totalSum(for: section)
+        label.text = "Блюд: \(count)    Сумма: \(sum) ₽"
+        label.textAlignment = .right
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+        view.backgroundColor = .secondarySystemBackground
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                           constant: 16),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                            constant: -16),
+            label.topAnchor.constraint(equalTo: view.topAnchor,
+                                       constant: 8),
+            label.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                          constant: -8)
+        ])
+        return view
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        delegate.order.count
+        positions(for: section).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: OrderTableViewCell.id, for: indexPath) as! OrderTableViewCell
-        let position = delegate.order[indexPath.row]
-        cell.titleLabel.text = position.product.title
-        cell.countLabel.text = "\(position.count)"
-        cell.sumLabel.text = "\(position.cost) ₽"
+        let cell = tableView.dequeueReusableCell(withIdentifier: OrderTableViewCell.id,
+                                                 for: indexPath) as! OrderTableViewCell
+           let position = positions(for: indexPath.section)[indexPath.row]
+           cell.titleLabel.text = position.product.title
+           cell.countLabel.text = "\(position.count)"
+           cell.sumLabel.text = "\(position.cost) ₽"
         return cell
     }
     

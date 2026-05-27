@@ -6,7 +6,7 @@ final class OrderViewController: UIViewController {
         view as! OrderView
     }
     
-    private(set) var order = [OrderPosition]() {
+    private(set) var orders = [OrderPosition]() {
         didSet {
             mainView.updateTotal(sum: calculateTotal())
             mainView.reloadData()
@@ -39,7 +39,7 @@ final class OrderViewController: UIViewController {
     }
     
     private func calculateTotal() -> Int {
-        order.reduce(0) { partialResult, position in
+        orders.reduce(0) { partialResult, position in
             partialResult + (position.product.price * position.count)
         }
     }
@@ -47,7 +47,7 @@ final class OrderViewController: UIViewController {
 
 extension OrderViewController: AddPosiotnDelegate {
     func addPosition(_ pos: OrderPosition) {
-        order.append(pos)
+        orders.append(pos)
     }
 }
 
@@ -60,10 +60,10 @@ extension OrderViewController: OrderViewDelegate {
         let stepper = UIStepper()
             stepper.minimumValue = 1
             stepper.maximumValue = 10
-            stepper.value = Double(self.order[index].count)
+            stepper.value = Double(self.orders[index].count)
 
         let countLabel = UILabel()
-            countLabel.text = "\(self.order[index].count) шт."
+            countLabel.text = "\(self.orders[index].count) шт."
         
         stepper.addAction(
             UIAction { _ in
@@ -86,7 +86,7 @@ extension OrderViewController: OrderViewDelegate {
             title: "OK",
             style: .default
         ) { [weak self] _ in
-            self?.order[index].count = Int(stepper.value)
+            self?.orders[index].count = Int(stepper.value)
             self?.mainView.reloadData()
         })
         
@@ -97,7 +97,7 @@ extension OrderViewController: OrderViewDelegate {
     }
     
     func deleteOrder(with index: Int) {
-        self.order.remove(at: index)
+        self.orders.remove(at: index)
         mainView.reloadData()
     }
 }

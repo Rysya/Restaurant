@@ -8,9 +8,12 @@ final class OrderViewController: UIViewController {
     
     private(set) var order = [OrderPosition]() {
         didSet {
+            mainView.updateTotal(sum: calculateTotal())
             mainView.reloadData()
         }
     }
+    
+    private var sumTotal: (() -> Int)?
     
     override func loadView() {
         view = OrderView(delegate: self)
@@ -19,6 +22,7 @@ final class OrderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addActions()
+        navigationItem.title = "Заказ"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,6 +36,12 @@ final class OrderViewController: UIViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         mainView.addButton.addAction(pushAddAction, for: .touchUpInside)
+    }
+    
+    private func calculateTotal() -> Int {
+        order.reduce(0) { partialResult, position in
+            partialResult + (position.product.price * position.count)
+        }
     }
 }
 

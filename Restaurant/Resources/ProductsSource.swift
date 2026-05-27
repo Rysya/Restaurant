@@ -7,7 +7,8 @@ struct ProductsSource {
                 price: 300,
                 oldPrice: 400,
                 description: "Шашлычок из баранины! Вчера бегал, отвечаю!",
-                category: .hot
+                category: .hot,
+                imageName: "Shashlyk"
             ),
             
             Product(
@@ -23,7 +24,8 @@ struct ProductsSource {
                 price: 350,
                 oldPrice: 470,
                 description: "просто лагман с домашней лапшой",
-                category: .hot
+                category: .hot,
+                imageName: "Lagman"
             ),
             
             Product(
@@ -36,6 +38,30 @@ struct ProductsSource {
             
             Product(
                 title: "Кофе по-восточному",
+                price: 160,
+                oldPrice: 270,
+                description: "Готовится в турке на песчаной бане",
+                category: .hot
+            ),
+            
+            Product(
+                title: "Кофе по-европейски",
+                price: 160,
+                oldPrice: 270,
+                description: "Готовится в турке на песчаной бане",
+                category: .hot
+            ),
+            
+            Product(
+                title: "Кофе обыкновенный",
+                price: 160,
+                oldPrice: 270,
+                description: "Готовится в турке на песчаной бане",
+                category: .hot
+            ),
+            
+            Product(
+                title: "Кофе Латте",
                 price: 160,
                 oldPrice: 270,
                 description: "Готовится в турке на песчаной бане",
@@ -71,7 +97,8 @@ struct ProductsSource {
                 price: 300,
                 oldPrice: nil,
                 description: "Ваш батя оценит!",
-                category: .drink
+                category: .drink,
+                imageName: "Conyak"
         )
     ]
 }

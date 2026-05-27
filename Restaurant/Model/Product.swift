@@ -6,6 +6,7 @@ struct Product {
     let oldPrice: Int?
     let description: String
     let category: ProductCategory
+    var imageName: String?
 }
 
 enum ProductCategory: String {

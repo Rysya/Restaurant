@@ -1,9 +1,9 @@
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     
-    let orderVC = OrderViewController()
-    let productsVC = MenuController()
+    private let orderVC = OrderViewController()
+    private let productsVC = MenuController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,7 +13,7 @@ class TabBarController: UITabBarController {
         ]
     }
     
-    func makeNavVC(rootVC: UIViewController, title: String, image: UIImage) -> UINavigationController {
+    private func makeNavVC(rootVC: UIViewController, title: String, image: UIImage) -> UINavigationController {
         let vc = UINavigationController(rootViewController: rootVC)
         vc.tabBarItem.title = title
         vc.tabBarItem.image = image

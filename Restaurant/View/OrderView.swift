@@ -3,8 +3,8 @@ import UIKit
 protocol OrderViewDelegate: AnyObject {
     var orders: [OrderPosition] { get }
     
-    func showEditCountAlert(with index: Int)
-    func deleteOrder(with index: Int)
+    func showEditCountAlert(for section: Int, with index: Int)
+    func deleteOrder(for section: Int, with index: Int)
 }
 
 final class OrderView: UIView {
@@ -81,7 +81,7 @@ final class OrderView: UIView {
         tableView.tableFooterView?.backgroundColor = .brown
     }
     
-    private var visibleCategories: [ProductCategory] {
+    var visibleCategories: [ProductCategory] {
         ProductCategory.allCases.filter { category in
             delegate.orders.contains {
                 $0.product.category == category
@@ -179,7 +179,7 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Изменить") { _, _, _ in
-            self.delegate.showEditCountAlert(with: indexPath.row)
+            self.delegate.showEditCountAlert(for: indexPath.section, with: indexPath.row)
         }
         action.backgroundColor = .systemGreen
         let config = UISwipeActionsConfiguration(actions: [action])
@@ -188,7 +188,7 @@ extension OrderView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { _, _, _ in
-            self.delegate.deleteOrder(with: indexPath.row)
+            self.delegate.deleteOrder(for: indexPath.section, with: indexPath.row)
         }
         let config = UISwipeActionsConfiguration(actions: [deleteAction])
         return config

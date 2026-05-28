@@ -1,6 +1,6 @@
 import UIKit
 
-class CompositionalLayoutService {
+final class CompositionalLayoutService {
     static let shared = CompositionalLayoutService();
     
     private init() {}

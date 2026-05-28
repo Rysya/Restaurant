@@ -62,11 +62,7 @@ final class OrderTableViewCell: UITableViewCell {
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        stackLabel.addArrangedSubview(titleLabel)
-        stackLabel.addArrangedSubview(sumStack)
-        sumStack.addArrangedSubview(countLabel)
-        sumStack.addArrangedSubview(sumLabel)
-        self.addSubviews([stackLabel, sumLineFirst, sumLineSecond])
+        setupUI()
         setConstraints()
     }
     
@@ -78,7 +74,15 @@ final class OrderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    // MARK: - Navigation
+    private func setupUI() {
+        stackLabel.addArrangedSubview(titleLabel)
+        stackLabel.addArrangedSubview(sumStack)
+        sumStack.addArrangedSubview(countLabel)
+        sumStack.addArrangedSubview(sumLabel)
+        self.addSubviews([stackLabel, sumLineFirst, sumLineSecond])
+    }
+    
+    // MARK: - Constraints
 
     private func setConstraints() {
         NSLayoutConstraint.activate([

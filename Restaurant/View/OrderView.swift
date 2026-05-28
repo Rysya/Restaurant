@@ -106,7 +106,7 @@ final class OrderView: UIView {
             .reduce(0) { $0 + $1.count }
     }
 
-    // MARK: - Navigation
+    // MARK: - Constraints
     
     private func setConstraints() {
         NSLayoutConstraint.activate([

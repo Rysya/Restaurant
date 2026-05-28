@@ -1,6 +1,6 @@
 import UIKit
 
-class MenuController: UIViewController {
+final class MenuController: UIViewController {
     
     let mainView = MenuView()
 
@@ -10,9 +10,7 @@ class MenuController: UIViewController {
         navigationItem.title = "Блюда и напитки"
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
-        
     }
-
 }
 
 extension MenuController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -28,12 +26,9 @@ extension MenuController: UICollectionViewDelegate, UICollectionViewDataSource {
             case 1: return ProductsSource.products.count
             default: return 0
         }
-        
-       
     }
     //создает заполняет и возвращает ячейку
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoriesCell.reuseID, for: indexPath)
@@ -45,8 +40,7 @@ extension MenuController: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.priceLabel.text = "\(product.price) ₽"
                 if let imageName = product.imageName {
                     cell.productImageView.image = UIImage(named: imageName)
-                } else
-                {
+                } else {
                 cell.productImageView.image = UIImage(systemName: "photo")
                 }
                 return cell

@@ -46,9 +46,7 @@ final class AddPositionViewController: UIViewController {
         }
         
         mainView.readyButton.addAction(readyAction, for: .touchUpInside)
-    }
-    
-    // MARK: - Navigation
+    }    
 }
 
 extension AddPositionViewController: UIPickerViewDelegate, UIPickerViewDataSource {

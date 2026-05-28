@@ -1,6 +1,6 @@
 import UIKit
 
-class ProductCell: UICollectionViewCell {
+final class ProductCell: UICollectionViewCell {
     
     static let reuseID = "ProductCell"
     let productImageView = UIImageView(image: UIImage(systemName: "photo"))
@@ -28,7 +28,7 @@ class ProductCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI() {
+    private func setupUI() {
         backgroundColor = .white
         layer.cornerRadius = 12
         priceLabel.textAlignment = .right
@@ -37,9 +37,9 @@ class ProductCell: UICollectionViewCell {
         productImageView.contentMode = .scaleAspectFill
     }
     
-    // MARK: - Navigation
+    // MARK: - Constraints
     
-    func setConstraints() {
+    private func setConstraints() {
         let hStack = UIStackView(arrangedSubviews: [titleLabel, priceLabel])
         hStack.axis = .horizontal
         hStack.spacing = 6

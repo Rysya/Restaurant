@@ -59,7 +59,6 @@ final class OrderViewController: UIViewController {
 
 extension OrderViewController: AddPosiotnDelegate {
     func addPosition(_ pos: OrderPosition) {
-
             if let index = orders.firstIndex(where: {
                 $0.product.title == pos.product.title
             }) {
@@ -90,11 +89,9 @@ extension OrderViewController: OrderViewDelegate {
         let countLabel = UILabel()
         countLabel.text = "\(self.orders[realIndex].count) шт."
 
-        stepper.addAction(
-            UIAction { _ in
+        stepper.addAction(UIAction { _ in
                 countLabel.text = "\(Int(stepper.value)) шт."
-            },
-            for: .valueChanged
+            }, for: .valueChanged
         )
 
         alert.view.addSubviews([stepper, countLabel])

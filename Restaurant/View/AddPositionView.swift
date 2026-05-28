@@ -73,7 +73,7 @@ final class AddPositionView: UIView {
         addSubviews([stack])
     }
     
-    // MARK: - Navigation
+    // MARK: - Constraints
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
